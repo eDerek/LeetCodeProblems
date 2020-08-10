@@ -33,13 +33,82 @@
 // Input: target = [1,1,1,1]
 // Output: 1
 
+let result = 0;
 /**
  * @param {number[]} target
  * @return {number}
  */
 var minNumberOperations = function(target) {
-    
+    result = 0;
+    go(target);
+    return result;
 };
+
+function go(target){
+    if(target.length == 0){
+        return;
+    }
+    let breakPoints = [];
+    let min = getMin(target);
+    for(let i=0;i<target.length;i++){
+        target[i] = target[i]-min;
+        if(target[i] == 0){
+            breakPoints.push(i);
+        }
+    }
+    result += min;
+    // console.log(target);
+    // console.log(breakPoints,'------');
+
+    if(breakPoints.length == target.length){
+        target.length = 0;
+        return;
+    }
+    if(breakPoints.length == 0){
+        // Would not be here-----------
+        // go(target);
+    }else{
+        // 1 break point makes 2 subarray, 2 break points make 3 subarrays, ........
+        if(breakPoints[0] - 1 >= 0){
+            let subArray = getSubArray(0, breakPoints[0] - 1, target)
+            go(subArray);
+            subArray.length = 0;
+        }
+        for(let j=1;j<breakPoints.length;j++){
+            let start = breakPoints[j-1]+1;
+            let end = breakPoints[j]-1;
+            // console.log(start, end, '#####');
+            if(start <= end){
+                let subArray = getSubArray(start, end, target);
+                go(subArray);
+                subArray.length = 0;
+            }
+        }
+        if(breakPoints[breakPoints.length-1] + 1 <= target.length-1){
+            let subArray = getSubArray(breakPoints[breakPoints.length-1] + 1, target.length-1, target)
+            go(subArray);
+            subArray.length = 0;
+        }
+    }
+}
+
+function getSubArray(start, end, target){
+    let subArray = [];
+    for(let k = start;k<=end;k++){
+        subArray.push(target[k]);
+    }
+    return subArray;
+}
+
+function getMin(target){
+    let min = target[0];
+    for(let num of target){
+        if(num < min){
+            min = num;
+        }
+    }
+    return min;
+}
 
 console.log(minNumberOperations([1,2,3,2,1]));
 console.log(minNumberOperations([3,1,1,2]));
