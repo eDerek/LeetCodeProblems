@@ -40,17 +40,17 @@ let result = 0;
  */
 var minNumberOperations = function(target) {
     result = 0;
-    go(target);
+    go(target, 0, target.length-1);
     return result;
 };
 
-function go(target){
-    if(target.length == 0){
+function go(target, x, y){
+    if(x < y){
         return;
     }
     let breakPoints = [];
     let min = getMin(target);
-    for(let i=0;i<target.length;i++){
+    for(let i=x;i<=y;i++){
         target[i] = target[i]-min;
         if(target[i] == 0){
             breakPoints.push(i);
@@ -60,8 +60,7 @@ function go(target){
     // console.log(target);
     // console.log(breakPoints,'------');
 
-    if(breakPoints.length == target.length){
-        target.length = 0;
+    if(breakPoints.length == y-x+1){
         return;
     }
     if(breakPoints.length == 0){
@@ -69,25 +68,22 @@ function go(target){
         // go(target);
     }else{
         // 1 break point makes 2 subarray, 2 break points make 3 subarrays, ........
-        if(breakPoints[0] - 1 >= 0){
-            let subArray = getSubArray(0, breakPoints[0] - 1, target)
-            go(subArray);
-            subArray.length = 0;
+        if(breakPoints[0] - 1 >= x){
+            // let subArray = getSubArray(x, breakPoints[0] - 1, target)
+            go(target, x, breakPoints[0] - 1);
         }
         for(let j=1;j<breakPoints.length;j++){
             let start = breakPoints[j-1]+1;
             let end = breakPoints[j]-1;
             // console.log(start, end, '#####');
             if(start <= end){
-                let subArray = getSubArray(start, end, target);
-                go(subArray);
-                subArray.length = 0;
+                // let subArray = getSubArray(start, end, target);
+                go(target, start, end);
             }
         }
-        if(breakPoints[breakPoints.length-1] + 1 <= target.length-1){
-            let subArray = getSubArray(breakPoints[breakPoints.length-1] + 1, target.length-1, target)
-            go(subArray);
-            subArray.length = 0;
+        if(breakPoints[breakPoints.length-1] + 1 <= y){
+            // let subArray = getSubArray(breakPoints[breakPoints.length-1] + 1, y, target)
+            go(target, breakPoints[breakPoints.length-1] + 1, y);
         }
     }
 }
