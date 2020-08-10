@@ -45,11 +45,11 @@ var minNumberOperations = function(target) {
 };
 
 function go(target, x, y){
-    if(x < y){
+    if(x > y){
         return;
     }
     let breakPoints = [];
-    let min = getMin(target);
+    let min = getMin(target, x, y);
     for(let i=x;i<=y;i++){
         target[i] = target[i]-min;
         if(target[i] == 0){
@@ -88,19 +88,19 @@ function go(target, x, y){
     }
 }
 
-function getSubArray(start, end, target){
-    let subArray = [];
-    for(let k = start;k<=end;k++){
-        subArray.push(target[k]);
-    }
-    return subArray;
-}
+// function getSubArray(start, end, target){
+//     let subArray = [];
+//     for(let k = start;k<=end;k++){
+//         subArray.push(target[k]);
+//     }
+//     return subArray;
+// }
 
-function getMin(target){
-    let min = target[0];
-    for(let num of target){
-        if(num < min){
-            min = num;
+function getMin(target, x, y){
+    let min = target[x];
+    for(let i=x;i<=y;i++){
+        if(target[i] < min){
+            min = target[i];
         }
     }
     return min;
