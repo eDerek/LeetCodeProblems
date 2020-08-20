@@ -46,7 +46,7 @@ function go(currIdx, coins, amount){
     }
 };
 
-// NOT finished yet-----------------
+// NOT finished yet-----------------exceeded time in some test case
 
 // console.log(coinChange([2], 8));
 

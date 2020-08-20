@@ -87,7 +87,7 @@ function ha(myQueue, mySet, target){
     ha(newQueue, mySet, target);
 }
 
-// Correct results but very slow and stupid algorithm-----------------
+// Correct results but it's a very slow and stupid algorithm-----------------
 console.log(nthUglyNumber(1));
 console.log(nthUglyNumber(2));
 console.log(nthUglyNumber(3));
