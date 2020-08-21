@@ -17,5 +17,42 @@
  * @return {Node}
  */
 var flatten = function(head) {
-    
+    if(head){
+        go(head);
+    }
+    return head;
 };
+
+function go(node){
+    let childHead = node.child;
+    let next = node.next;
+    if(!childHead && !next){
+        return node;
+    }
+    if(childHead){
+        node.next = childHead;
+        node.child = null;
+        childHead.prev = node;
+        let tempEnd = go(childHead);
+        if(next){
+            next.prev = tempEnd;
+            tempEnd.next = next;
+        }
+    }
+    if(next){
+        return go(next);
+    }
+
+    // let childEnd = childHead;
+    // go(childHead);
+    // while(childEnd.next){
+    //     childEnd = childEnd.next;
+    //     go(childEnd);
+    // }
+    
+    // if(next){
+    //     next.prev = childEnd;
+    //     childEnd.next = next;
+    //     go(next);
+    // }
+}
