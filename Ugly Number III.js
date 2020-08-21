@@ -39,5 +39,86 @@
  * @return {number}
  */
 var nthUglyNumber = function(n, a, b, c) {
-    
+    let tempArray = [a,b,c].sort(function(x,y){
+        return x-y;
+    });
+    a = tempArray[0];
+    b = tempArray[1];
+    c = tempArray[2];
+    let pa = 0;
+    let pb = b;
+    let pc = c;
+    let counter = 0;
+    let x = 0;
+    let bPlused = false;
+    let cPlused = false;
+    // let aaa = [];
+    while(counter < n){
+        bPlused = false;
+        cPlused = false;
+        pa += a;
+        counter++;
+        // aaa.push(a+'-'+pa);
+        if(pa<pb && pa<pc){
+            continue;
+        }
+        if(pa > pb){
+            counter++;
+            // aaa.push(b+'-'+pb);
+            pb += b;
+            bPlused = true;
+        }
+        if(pa == pb){
+            pb += b;
+        }
+        if(b == c){
+            continue;
+        } 
+        if(pa > pc){
+            if(bPlused && pc != pb-b){
+                counter++;
+                // aaa.push(c+'-'+pc);
+                cPlused = true;
+            }
+            if(!bPlused){
+                counter++;
+                // aaa.push(c+'-'+pc+'##');
+                cPlused = true;
+            }
+            pc += c;
+        }
+        if(pa == pc){
+            pc += c;
+        }
+    }
+    if(counter == n){
+        x = pa;
+    }
+    if(counter == n+2){
+        x = pb-b<pc-c?pb-b:pc-c;
+    }
+    if(counter == n+1){
+        if(bPlused){
+            x = pb-b;
+        }
+        if(cPlused){
+            x = pc-c;
+        }
+    }
+    // console.log(aaa);
+    return x;
 };
+
+// Not finished---------------------------
+console.log(nthUglyNumber(3,2,3,5));
+console.log(nthUglyNumber(4,2,3,4));
+console.log(nthUglyNumber(5,2,11,13));
+// console.log(nthUglyNumber(1000000000,2,217983653,336916467));
+console.log(nthUglyNumber(5,2,3,3));
+console.log(nthUglyNumber(12,10,3,5));
+console.log(nthUglyNumber(10000,5993,6366,7854)); // Wrong Answer. Expected : 22166412
+
+// 10000
+// 5993
+// 6366
+// 7854
