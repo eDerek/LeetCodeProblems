@@ -34,5 +34,29 @@
  * @return {number}
  */
 var longestArithSeqLength = function(A) {
-    
+    if(A.length <= 1){
+        return 0;
+    }
+    let maxCount = 0;
+    for(let i=0;i<A.length-1;i++){
+        for(let j=i+1;j<A.length;j++){
+            let diff = A[j]-A[i];
+            let counter = 2;
+            let last = A[j];
+            for(let k=j+1;k<A.length;k++){
+                if(A[k]-last == diff){
+                    counter++;
+                    last = A[k];
+                }
+            }
+            if(counter>maxCount){
+                maxCount = counter;
+            }
+        }
+    }
+    return maxCount;
 };
+
+console.log(longestArithSeqLength([3,6,9,12]));
+console.log(longestArithSeqLength([9,4,7,2,10]));
+console.log(longestArithSeqLength([20,1,15,3,10,5,8]));
