@@ -20,6 +20,7 @@
  */
 var Trie = function() {
     this.value = null;
+    this.isKeyword = false;
 };
 
 /**
@@ -29,9 +30,18 @@ var Trie = function() {
  */
 Trie.prototype.insert = function(word) {
     let charArray = word.split('');
+    let currNode = this;
     for(let c of charArray){
-        
+        if(currNode[c]){
+            currNode = currNode[c];
+        }else{
+            let newNode = new Trie();
+            newNode.value = c;
+            currNode[c] = newNode;
+            currNode = newNode; 
+        }
     }
+    currNode.isKeyword = true;
 };
 
 /**
@@ -40,7 +50,15 @@ Trie.prototype.insert = function(word) {
  * @return {boolean}
  */
 Trie.prototype.search = function(word) {
-    
+    let charArray = word.split('');
+    let currNode = this;
+    for(let c of charArray){
+        if(!currNode[c]){
+            return false;
+        }
+        currNode = currNode[c];
+    }
+    return currNode.isKeyword;
 };
 
 /**
@@ -49,7 +67,15 @@ Trie.prototype.search = function(word) {
  * @return {boolean}
  */
 Trie.prototype.startsWith = function(prefix) {
-    
+    let charArray = prefix.split('');
+    let currNode = this;
+    for(let c of charArray){
+        if(!currNode[c]){
+            return false;
+        }
+        currNode = currNode[c];
+    }
+    return true;
 };
 
 /** 
@@ -63,8 +89,10 @@ Trie.prototype.startsWith = function(prefix) {
 let trie = new Trie();
 
 trie.insert("apple");
-trie.search("apple");   // returns true
-trie.search("app");     // returns false
-trie.startsWith("app"); // returns true
+console.log(trie.search("apple"));   // returns true
+console.log(trie.search("app"));     // returns false
+console.log(trie.startsWith("app")); // returns true
 trie.insert("app");   
-trie.search("app");     // returns true
+console.log(trie.search("app"));     // returns true
+console.log(trie.search("apple"));   // returns true
+console.log(trie.startsWith("apple"));   // returns true
