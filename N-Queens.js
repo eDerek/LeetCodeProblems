@@ -22,7 +22,7 @@
 // ]
 // Explanation: There exist two distinct solutions to the 4-queens puzzle as shown above.
 
-let dirctions = [[1,1],[-1,-1],[1,-1],[-1,1],[1,0],[-1,0],[0,1],[0,-1]];
+let dirctions = [[1,1],[-1,-1],[1,-1],[-1,1]];
 /**
  * @param {number} n
  * @return {string[][]}
@@ -36,34 +36,60 @@ var solveNQueens = function(n) {
     }
     let result = [];
     let s = [];
+    let yArray = [];
     for(let i=0;i<n;i++){
+        yArray.push(0);
         let row = [];
         s.push(row);
         for(let j=0;j<n;j++){
             row.push('.');
         }
     }
-    go(s, result, 0, 0);
+    
+    go(s, result, 0, 0, yArray);
     return result;
 };
 
-function go(s, result, x, y){
+function go(s, result, x, y, yArray){
     if(x == s.length || y == s.length){
         return;
     }
     if(check(s, x, y)){
         s[x][y] = 'Q';
+        yArray[y] = 1;
         if(x == s.length-1){
             result.push(_2dTo1d(s));
         }
-        go(s,result, x+1,0);
+        let newY = pickY(yArray, s.length);
+        if(newY != -1){
+            go(s,result, x+1,newY,yArray);
+        }
     }
     // else{
-    //     go(s,result, x,y+1);
+    //     go(s,result, x,y+1,yArray);
     // }
 
     s[x][y] = '.';
-    go(s,result,x,y+1);
+    yArray[y] = 0;
+    let tempY = -1;
+    for(let i=y+1;i<s.length;i++){
+        if(yArray[i] == 0){
+            tempY = i;
+            break;
+        }
+    }
+    if(tempY != -1){
+        go(s,result,x,tempY,yArray);
+    }
+}
+
+function pickY(yArray, n){
+    for(let i=0;i<n;i++){
+        if(yArray[i] == 0){
+            return i;
+        }
+    }
+    return -1;
 }
 
 function check(s, x, y){
