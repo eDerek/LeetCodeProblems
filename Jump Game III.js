@@ -38,5 +38,38 @@
  * @return {boolean}
  */
 var canReach = function(arr, start) {
-    
+    for(let i=0;i<arr.length;i++){
+        if(arr[i] != 0){
+            continue;
+        }
+        let mySet = new Set();
+        if(go(arr, start, i, mySet)){
+            return true;
+        }
+    }
+    return false;
 };
+
+function go(arr, target, currP, mySet){
+    for(let i=0;i<arr.length;i++){
+        if(Math.abs(i-currP) != arr[i]){
+            continue;
+        }
+        if(i == target){
+            return true;
+        }
+        if(mySet.has(i)){
+            continue;
+        }else{
+            mySet.add(i);
+        }
+        if(go(arr, target, i, mySet)){
+            return true;
+        }
+    }
+    return false;
+}
+
+console.log(canReach([4,2,3,0,3,1,2], 5));
+console.log(canReach([4,2,3,0,3,1,2], 0));
+console.log(canReach([3,0,2,1,2], 2));
