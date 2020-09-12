@@ -39,9 +39,10 @@
  */
 var combinationSum = function(candidates, target) {
     let result = [];
-    // candidates.sort(function(a,b){
-    //     return b-a;
-    // });
+    // 'sort' is not necessary-----------
+    candidates.sort(function(a,b){
+        return a-b;
+    });
     // console.log(candidates);
     go(candidates, 0, [], result, target);
     return result;
@@ -60,9 +61,10 @@ function go(candidates, currIdx, solution, result, target){
     if(currIdx == candidates.length-1 && target%currItem != 0){
         return;
     }
-    // if(target < currItem){
-    //     return go(candidates, currIdx+1, solution, result, target);
-    // }
+    // not necessary-------------may be faster
+    if(target < currItem){
+        return;
+    }
     for(let i=0;i<=Math.floor(target/currItem);i++){
         if(i>0){
             solution.push(currItem);
@@ -70,6 +72,9 @@ function go(candidates, currIdx, solution, result, target){
         let tempSolution = Array.from(solution);
         go(candidates, currIdx+1, solution, result, target-currItem*i);
         solution = tempSolution;
+        // if(i>0){
+        //     solution.pop();
+        // }
     }
 }
 
