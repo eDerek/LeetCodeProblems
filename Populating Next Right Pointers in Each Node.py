@@ -33,7 +33,7 @@
 # -1000 <= node.val <= 1000
 
 
-"""
+
 # Definition for a Node.
 class Node:
     def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
@@ -41,8 +41,22 @@ class Node:
         self.left = left
         self.right = right
         self.next = next
-"""
+
 
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
-        
+        if not root:
+            return root
+        self.go(root)
+        return root
+    
+    def go(self, node: 'Node'):
+        if not node.left:
+            return
+        node.left.next = node.right
+        if node.next:
+            node.right.next = node.next.left
+        self.go(node.left)
+        self.go(node.right)
+
+Solution().connect(Node())
