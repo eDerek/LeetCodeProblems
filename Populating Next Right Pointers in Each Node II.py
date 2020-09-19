@@ -41,33 +41,34 @@ class Node:
         self.next = next
 
 class Solution:
+    firstChild: 'Node' = None
+    lastChild: 'Node' = None
     def connect(self, root: 'Node') -> 'Node':
-        self.go(root, None, None)
+        self.go(root)
         return root
     
-    def go(self, node: 'Node', firstChild: 'Node', lastChild: 'Node'):
+    def go(self, node: 'Node'):
         if not node:
             return
-        # print(node.val)
         if node.left:
-            if not firstChild:
-                firstChild = node.left
-            if lastChild:
-                if not lastChild.next:
-                    lastChild.next = node.left
-            lastChild = node.left
+            if not self.firstChild:
+                self.firstChild = node.left
+            if self.lastChild:
+                self.lastChild.next = node.left
+            self.lastChild = node.left
         
         if node.right:
-            if not firstChild:
-                firstChild = node.right
-            if lastChild:
-                if not lastChild.next:
-                    lastChild.next = node.right
-            lastChild = node.right
+            if not self.firstChild:
+                self.firstChild = node.right
+            if self.lastChild:
+                self.lastChild.next = node.right
+            self.lastChild = node.right
         
-        self.go(node.next, firstChild, lastChild)
+        self.go(node.next)
         if not node.next:
-            # print(firstChild)
-            self.go(firstChild, None, None)
+            temp = self.firstChild
+            self.firstChild = None
+            self.lastChild = None
+            self.go(temp)
 
 Solution().connect(Node())
