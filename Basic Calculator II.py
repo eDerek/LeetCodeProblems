@@ -21,44 +21,64 @@
 
 class Solution:
     def calculate(self, s: str) -> int:
+        # print(int(-10/3))
         s = s.replace(' ','')
         sArray = list(s)
-        result = 0
         values = []
         opts = []
         currVal = 0
-        x = 1
-        lastOpt = '+'
+
+        def haha() -> int:
+            if len(opts) > 0 and opts[-1] == '*':
+                lastVal = values.pop()
+                opts.pop()
+                return lastVal*currVal
+            if len(opts) > 0 and opts[-1] == '/':
+                lastVal = values.pop()
+                # print(lastVal)
+                opts.pop()
+                return int(lastVal/currVal)
+            return currVal
+        
         for c in sArray:
+            if c.isnumeric():
+                currVal = currVal*10+int(c)
+                continue
+
+            currVal = haha()
+            
             if c=='+':
-                lastOpt = c
                 values.append(currVal)
                 opts.append('+')
                 currVal = 0
-                x = 1
             elif c=='-':
-                lastOpt = c
                 values.append(currVal)
                 opts.append('-')
                 currVal = 0
-                x = 1
             elif c=='*':
-                lastOpt = c
                 values.append(currVal)
                 opts.append('*')
                 currVal = 0
             elif c=='/':
-                lastOpt = c
                 values.append(currVal)
+                # print(currVal,'-----------------')
                 opts.append('/')
                 currVal = 0
-            else:
-                currVal = currVal*10+int(c)
+        # print(values)
+        currVal = haha()
+        
         values.append(currVal)
-        print(values, opts)
-        valueStack = [values[0]]
+        # print(values, opts)
+
+        result = values[0]
+        for i in range(0, len(opts)):
+            if opts[i] == '+':
+                result += values[i+1]
+            else:
+                result -= values[i+1]
         return result
 
+    # Not correct ------------------------------
     def go(self, sArray) -> int:
         print(sArray)
         valStr = ''
@@ -81,4 +101,4 @@ print(Solution().calculate('3+2*2'))
 print(Solution().calculate('3/2'))
 print(Solution().calculate(' 3+5 / 2 '))
 
-print(Solution().calculate('13+2-37+912'))
+print(Solution().calculate('3+5 / 2*3-8-9/3'))
