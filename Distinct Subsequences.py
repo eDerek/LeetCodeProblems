@@ -41,6 +41,8 @@ from typing import List
 class Solution:
     result = 0
     def numDistinct(self, s: str, t: str) -> int:
+        if len(s)<len(t):
+            return 0
         self.result = 0
         sArray = list(s)
         tArray = list(t)
@@ -55,7 +57,8 @@ class Solution:
             else:
                 sMap[sArray[i]] = [i]
                 # tDistinctArray.append(sArray[i])
-        print(sMap)
+        # print(sMap)
+        # print(tSet)
         # def getNextStartIdx(targetIdx, idxArray) -> int:
         #     for idx in idxArray:
         #         if idx>targetIdx:
@@ -67,8 +70,11 @@ class Solution:
         def go(targetIdx, currTDistinctIdx):
             if currTDistinctIdx == len(tArray):
                 return
+            # print(targetIdx, tArray[currTDistinctIdx])
+            if not tArray[currTDistinctIdx] in sMap:
+                return
             for idx in sMap[tArray[currTDistinctIdx]]:
-                if idx < targetIdx:
+                if idx <= targetIdx:
                     continue
                 # print(targetIdx, currTDistinctIdx, idx)
                 if currTDistinctIdx == len(tArray)-1:
@@ -80,4 +86,6 @@ class Solution:
 
 # print(Solution().numDistinct('rabbbit','rabbit'))
 # print(Solution().numDistinct('babgbag','bag'))
-print(Solution().numDistinct('eee','eee'))
+# print(Solution().numDistinct('eee','eee'))
+# print(Solution().numDistinct('b','a'))
+print(Solution().numDistinct("daacaedaceacabbaabdccdaaeaebacddadcaeaacadbceaecddecdeedcebcdacdaebccdeebcbdeaccabcecbeeaadbccbaeccbbdaeadecabbbedceaddcdeabbcdaeadcddedddcececbeeabcbecaeadddeddccbdbcdcbceabcacddbbcedebbcaccac","ceadbaa"))
