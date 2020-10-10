@@ -46,24 +46,28 @@ class Solution:
                 continue
 
             currVal = haha()
-            
-            if c=='+':
-                values.append(currVal)
-                opts.append('+')
-                currVal = 0
-            elif c=='-':
-                values.append(currVal)
-                opts.append('-')
-                currVal = 0
-            elif c=='*':
-                values.append(currVal)
-                opts.append('*')
-                currVal = 0
-            elif c=='/':
-                values.append(currVal)
-                # print(currVal,'-----------------')
-                opts.append('/')
-                currVal = 0
+
+            values.append(currVal)
+            opts.append(c)
+            currVal = 0
+        
+            # if c=='+':
+            #     values.append(currVal)
+            #     opts.append('+')
+            #     currVal = 0
+            # elif c=='-':
+            #     values.append(currVal)
+            #     opts.append('-')
+            #     currVal = 0
+            # elif c=='*':
+            #     values.append(currVal)
+            #     opts.append('*')
+            #     currVal = 0
+            # elif c=='/':
+            #     values.append(currVal)
+            #     # print(currVal,'-----------------')
+            #     opts.append('/')
+            #     currVal = 0
         # print(values)
         currVal = haha()
         
