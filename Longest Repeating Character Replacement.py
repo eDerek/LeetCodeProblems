@@ -56,7 +56,7 @@ class Solution:
         b = myList[-1]-myList[0]+1-len(myList)
         if b <= k:
             return len(myList)+k
-        ---
+        -----
         return 0
 
 # print(Solution().characterReplacement("ABAB", 2))

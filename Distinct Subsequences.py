@@ -49,6 +49,7 @@ class Solution:
         tSet = set(t)
         # tDistinctArray = []
         sMap = {}
+        usedCharPositionMap = {}
         for i in range(len(s)):
             if not sArray[i] in tSet:
                 continue
@@ -73,13 +74,19 @@ class Solution:
             # print(targetIdx, tArray[currTDistinctIdx])
             if not tArray[currTDistinctIdx] in sMap:
                 return
-            for idx in sMap[tArray[currTDistinctIdx]]:
+            if not tArray[currTDistinctIdx] in usedCharPositionMap:
+                usedCharPositionMap[tArray[currTDistinctIdx]] = 0
+            for i in range(usedCharPositionMap[tArray[currTDistinctIdx]], len(sMap[tArray[currTDistinctIdx]])):
+                idx = sMap[tArray[currTDistinctIdx]][i]
+            # for idx in sMap[tArray[currTDistinctIdx]]:
                 if idx <= targetIdx:
                     continue
                 # print(targetIdx, currTDistinctIdx, idx)
+                usedCharPositionMap[tArray[currTDistinctIdx]] = i
                 if currTDistinctIdx == len(tArray)-1:
                     self.result += 1
                 go(idx, currTDistinctIdx+1)
+            usedCharPositionMap[tArray[currTDistinctIdx]] = 0
 
         go(-1, 0)
         return self.result
@@ -88,4 +95,5 @@ class Solution:
 # print(Solution().numDistinct('babgbag','bag'))
 # print(Solution().numDistinct('eee','eee'))
 # print(Solution().numDistinct('b','a'))
+# print(Solution().numDistinct('aabb','ab'))
 print(Solution().numDistinct("daacaedaceacabbaabdccdaaeaebacddadcaeaacadbceaecddecdeedcebcdacdaebccdeebcbdeaccabcecbeeaadbccbaeccbbdaeadecabbbedceaddcdeabbcdaeadcddedddcececbeeabcbecaeadddeddccbdbcdcbceabcacddbbcedebbcaccac","ceadbaa"))

@@ -49,6 +49,8 @@ class Solution:
                 if len(currStack) > 0:
                     currStack.pop()
                 return
+            
+            # This part seems unnecessary-------
             if len(currS) == 1:
                 if currS in mySet:
                     currStack.append(currS)
@@ -57,6 +59,8 @@ class Solution:
                 if len(currStack) > 0:
                     currStack.pop()
                 return
+            #------------------------
+
             resultCount = len(result)
             for i in range(len(currS), 0, -1):
                 # print(currS[0:i])
